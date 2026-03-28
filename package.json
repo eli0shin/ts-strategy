@@ -1,6 +1,6 @@
 {
   "name": "ts-strategy",
-  "version": "0.1.3",
+  "version": "0.0.1",
   "description": "Type-safe strategy pattern for TypeScript. Register named strategy variants and execute them with compile-time type safety.",
   "license": "MIT",
   "author": "eli0shin",
@@ -38,8 +38,7 @@
     "build:esm": "bun build src/index.ts --outdir dist --format esm --target node",
     "build:cjs": "bun build src/index.ts --outfile dist/index.cjs --format cjs --target node",
     "build:types": "tsc --project tsconfig.build.json && cp dist/index.d.ts dist/index.d.cts",
-    "test": "vitest run",
-    "test:types": "vitest --typecheck",
+    "test": "vitest run --typecheck",
     "type:check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
