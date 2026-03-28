@@ -1,6 +1,6 @@
 {
   "name": "ts-strategy",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Type-safe strategy pattern for TypeScript. Register named strategy variants and execute them with compile-time type safety.",
   "license": "MIT",
   "author": "eli0shin",
