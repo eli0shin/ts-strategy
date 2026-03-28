@@ -1,3 +1,4 @@
+/* eslint-disable for-ai/no-bare-wrapper */
 import { test, expect, describe } from 'vitest';
 import { createStrategy } from './createStrategy';
 
@@ -74,11 +75,8 @@ describe('createStrategy', () => {
         toExecute: () => 'result',
       });
 
-      expect(() =>
-        (strategy as ReturnType<typeof createStrategy>).variant(
-          'unknown' as never
-        )
-      ).not.toThrow();
+      // @ts-expect-error 'unknown' is not a registered variant
+      expect(() => strategy.variant('unknown')).not.toThrow();
     });
 
     test('.execute() throws for an unregistered variant ID', () => {
@@ -87,11 +85,8 @@ describe('createStrategy', () => {
         toExecute: () => 'result',
       });
 
-      expect(() =>
-        (strategy as ReturnType<typeof createStrategy>)
-          .variant('unknown' as never)
-          .execute()
-      ).toThrow();
+      // @ts-expect-error 'unknown' is not a registered variant
+      expect(() => strategy.variant('unknown').execute()).toThrow();
     });
 
     test('error message includes the unregistered variant ID', () => {
@@ -100,11 +95,10 @@ describe('createStrategy', () => {
         toExecute: () => 'result',
       });
 
-      expect(() =>
-        (strategy as ReturnType<typeof createStrategy>)
-          .variant('nope' as never)
-          .execute()
-      ).toThrow('No function defined for variant nope');
+      // @ts-expect-error 'nope' is not a registered variant
+      expect(() => strategy.variant('nope').execute()).toThrow(
+        'No function defined for variant nope'
+      );
     });
   });
 
@@ -130,25 +124,23 @@ describe('createStrategy', () => {
 
     test('empty variant array is a no-op', () => {
       const strategy = createStrategy({
-        variant: [] as string[],
+        variant: [],
         toExecute: () => 'never',
       });
 
-      expect(() =>
-        (strategy as ReturnType<typeof createStrategy>)
-          .variant('anything' as never)
-          .execute()
-      ).toThrow('No function defined for variant anything');
+      // @ts-expect-error 'anything' is not a registered variant
+      expect(() => strategy.variant('anything').execute()).toThrow(
+        'No function defined for variant anything'
+      );
     });
 
     test('zero config args means all execute calls throw', () => {
       const strategy = createStrategy();
 
-      expect(() =>
-        (strategy as ReturnType<typeof createStrategy>)
-          .variant('any' as never)
-          .execute()
-      ).toThrow('No function defined for variant any');
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      expect(() => strategy.variant('any').execute()).toThrow(
+        'No function defined for variant any'
+      );
     });
   });
 });
